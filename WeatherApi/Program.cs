@@ -1,3 +1,7 @@
+using Microsoft.Extensions.DependencyInjection;
+using WeatherApi.Interfaces;
+using WeatherApi.Repository;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -5,7 +9,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 
-builder.Services.AddSingleton<HttpClient>(new HttpClient());
+builder.Services.AddSingleton<HttpClient>();
+
+//Repository
+builder.Services.AddKeyedScoped<IRepositoryWeatherForecast,ApiRepository>("ApiRepository");
+builder.Services.AddKeyedScoped<IRepositoryWeatherForecast, RedisCacheRepository>("RedisCacheRepository");
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
