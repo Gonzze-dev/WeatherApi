@@ -1,4 +1,4 @@
-using Microsoft.Extensions.DependencyInjection;
+using RedisDB;
 using WeatherApi.Interfaces;
 using WeatherApi.Repository;
 
@@ -8,8 +8,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 
-
+//HTTP
 builder.Services.AddSingleton<HttpClient>();
+
+//DB
+builder.Services.AddSingleton<RedisDBConnection>();
 
 //Repository
 builder.Services.AddKeyedScoped<IRepositoryWeatherForecast,ApiRepository>("ApiRepository");

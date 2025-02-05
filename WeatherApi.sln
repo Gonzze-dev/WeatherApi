@@ -5,6 +5,8 @@ VisualStudioVersion = 17.12.35707.178
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WeatherApi", "WeatherApi\WeatherApi.csproj", "{96478910-8AE3-4848-A504-0C23F5E286C1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedisDB", "RedisDB\RedisDB.csproj", "{431C2683-5108-4987-B38C-2D8FA48756CA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{96478910-8AE3-4848-A504-0C23F5E286C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96478910-8AE3-4848-A504-0C23F5E286C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{96478910-8AE3-4848-A504-0C23F5E286C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{431C2683-5108-4987-B38C-2D8FA48756CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{431C2683-5108-4987-B38C-2D8FA48756CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{431C2683-5108-4987-B38C-2D8FA48756CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{431C2683-5108-4987-B38C-2D8FA48756CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
