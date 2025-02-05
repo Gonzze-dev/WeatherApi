@@ -9,17 +9,31 @@ namespace WeatherApi.Controllers
     [Route("api/[controller]")]
     public class WeatherForecastController(
         [FromKeyedServices("ApiRepository")]
-        IRepositoryWeatherForecast apiRepository
+        IRepositoryWeatherForecast apiRepository,
+        [FromKeyedServices("RedisCacheRepository")]
+        IRepositoryWeatherForecast redisCacheRepository
     ) : Controller
     {
-        private readonly IRepositoryWeatherForecast _apiRepository = apiRepository;
+        readonly IRepositoryWeatherForecast _apiRepository = apiRepository;
+        readonly IRepositoryWeatherForecast _redisCacheRepository = redisCacheRepository;
 
         [HttpGet("GetWeatherForecast")]
         public async Task<IActionResult> GetWeatherForecastData()
         {
+            //try
+            //{
+            //    var result = await _apiRepository.GetWeatherForecastData();
+
+            //    return Ok(result);
+            //}
+            //catch (Exception ex)
+            //{
+            //    return StatusCode(500, ex.Message);
+            //}
+
             try
             {
-                var result = await _apiRepository.GetWeatherForecastData();
+                var result = await _redisCacheRepository.GetWeatherForecastData();
 
                 return Ok(result);
             }
@@ -27,7 +41,6 @@ namespace WeatherApi.Controllers
             {
                 return StatusCode(500, ex.Message);
             }
-            
         }
     }
 }
