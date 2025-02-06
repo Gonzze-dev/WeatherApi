@@ -1,6 +1,9 @@
 using RedisDB;
+using StackExchange.Redis;
+using WeatherApi.Helpers;
 using WeatherApi.Interfaces;
 using WeatherApi.Repository;
+using WeatherApi.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,11 +15,17 @@ builder.Services.AddControllers();
 builder.Services.AddSingleton<HttpClient>();
 
 //DB
-builder.Services.AddSingleton<RedisDBConnection>();
+builder.Services.AddSingleton<RedisDBConnection>(); 
 
 //Repository
-builder.Services.AddKeyedScoped<IRepositoryWeatherForecast,ApiRepository>("ApiRepository");
-builder.Services.AddKeyedScoped<IRepositoryWeatherForecast, RedisCacheRepository>("RedisCacheRepository");
+builder.Services.AddKeyedScoped<IRepositoryWeatherForecast<HttpResponseMessage?>,ApiRepository>("ApiRepository");
+builder.Services.AddKeyedScoped<IRepositoryWeatherForecast<RedisValue>, RedisCacheRepository>("RedisCacheRepository");
+
+//Service
+builder.Services.AddScoped<WeatherForecastService>();
+
+//HelperService
+builder.Services.AddScoped<WeatherForecastRepositoryHelper>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

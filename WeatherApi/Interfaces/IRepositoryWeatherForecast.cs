@@ -1,7 +1,7 @@
 ﻿namespace WeatherApi.Interfaces
 {
-    public interface IRepositoryWeatherForecast
+    public interface IRepositoryWeatherForecast<T>
     {
-        Task<object> GetWeatherForecastData();
+        Task<T> GetWeatherForecastData();
     }
 }

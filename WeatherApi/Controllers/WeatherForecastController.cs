@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WeatherApi.Interfaces;
 using WeatherApi.Repository;
+using WeatherApi.Service;
 
 namespace WeatherApi.Controllers
 {
@@ -8,32 +9,20 @@ namespace WeatherApi.Controllers
     [ApiController]
     [Route("api/[controller]")]
     public class WeatherForecastController(
-        [FromKeyedServices("ApiRepository")]
-        IRepositoryWeatherForecast apiRepository,
-        [FromKeyedServices("RedisCacheRepository")]
-        IRepositoryWeatherForecast redisCacheRepository
+        WeatherForecastService weatherForecastService
     ) : Controller
     {
-        readonly IRepositoryWeatherForecast _apiRepository = apiRepository;
-        readonly IRepositoryWeatherForecast _redisCacheRepository = redisCacheRepository;
+        readonly WeatherForecastService _weatherForecastService = weatherForecastService;
 
         [HttpGet("GetWeatherForecast")]
         public async Task<IActionResult> GetWeatherForecastData()
         {
-            //try
-            //{
-            //    var result = await _apiRepository.GetWeatherForecastData();
-
-            //    return Ok(result);
-            //}
-            //catch (Exception ex)
-            //{
-            //    return StatusCode(500, ex.Message);
-            //}
-
             try
             {
-                var result = await _redisCacheRepository.GetWeatherForecastData();
+                var result = await _weatherForecastService.GetWeatherForecastData();
+
+                if (_weatherForecastService.Validate())
+                    BadRequest(_weatherForecastService.Errors);
 
                 return Ok(result);
             }
@@ -41,6 +30,8 @@ namespace WeatherApi.Controllers
             {
                 return StatusCode(500, ex.Message);
             }
+
+           
         }
     }
 }
