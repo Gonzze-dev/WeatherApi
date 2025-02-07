@@ -14,15 +14,16 @@ namespace WeatherApi.Repository
 
         public async Task<RedisValue> GetWeatherForecastData()
         {
-            var redisResult = await _DBConnection.StringGetAsync("PrimeraData");
+            string keyName = "WeatherForecastData";
+            var redisResult = await _DBConnection.StringGetAsync(keyName);
 
             
             return redisResult;
         }
 
-        public async Task Save()
-        { 
-            throw new NotImplementedException(); 
+        public async Task Save(object Data, string keyName = "WeatherForecastData")
+        {
+            await _DBConnection.StringSetAsync(keyName, JsonSerializer.Serialize(Data));
         }
 
     }
