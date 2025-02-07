@@ -23,7 +23,8 @@ namespace WeatherApi.Repository
 
         public async Task Save(object Data, string keyName = "WeatherForecastData")
         {
-            await _DBConnection.StringSetAsync(keyName, JsonSerializer.Serialize(Data));
+            var expire = TimeSpan.FromHours(1);
+            await _DBConnection.StringSetAsync(keyName, JsonSerializer.Serialize(Data), expire);
         }
 
     }
