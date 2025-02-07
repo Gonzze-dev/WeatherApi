@@ -2,6 +2,7 @@
 using StackExchange.Redis;
 using WeatherApi.Helpers;
 using WeatherApi.Interfaces;
+using WeatherApi.Repository;
 
 namespace WeatherApi.Service
 {
@@ -9,15 +10,14 @@ namespace WeatherApi.Service
     (
         [FromKeyedServices("ApiRepository")]
         IRepositoryWeatherForecast<HttpResponseMessage?> apiRepository,
-        [FromKeyedServices("RedisCacheRepository")]
-        IRepositoryWeatherForecast<RedisValue> redisCacheRepository,
+        RedisCacheRepository redisCacheRepository,
         WeatherForecastRepositoryHelper weatherForecastRepositoryHelper
     )
     {
         public readonly List<string> Errors = [];
 
         readonly IRepositoryWeatherForecast<HttpResponseMessage?> _apiRepository = apiRepository;
-        readonly IRepositoryWeatherForecast<RedisValue> _redisCacheRepository = redisCacheRepository;
+        readonly RedisCacheRepository _redisCacheRepository = redisCacheRepository;
         readonly WeatherForecastRepositoryHelper _weatherForecastRepositoryHelper = weatherForecastRepositoryHelper;
 
 
@@ -36,7 +36,6 @@ namespace WeatherApi.Service
                     return null;
                 }
 
-                Console.WriteLine(result);
                 return result;
 
             }
@@ -50,6 +49,8 @@ namespace WeatherApi.Service
                 Errors.AddRange(_weatherForecastRepositoryHelper.Errors);
                 return null;
             }
+
+            _redisCacheRepository.Save(result);
 
             return result;
         }
