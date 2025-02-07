@@ -20,6 +20,7 @@ builder.Services.AddSingleton<RedisDBConnection>();
 //Repository
 builder.Services.AddKeyedScoped<IRepositoryWeatherForecast<HttpResponseMessage?>,ApiRepository>("ApiRepository");
 builder.Services.AddKeyedScoped<IRepositoryWeatherForecast<RedisValue>, RedisCacheRepository>("RedisCacheRepository");
+builder.Services.AddScoped<RedisCacheRepository>();
 
 //Service
 builder.Services.AddScoped<WeatherForecastService>();
