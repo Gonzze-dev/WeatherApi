@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WeatherApi.Interfaces;
-using WeatherApi.Repository;
 using WeatherApi.Service;
 
 namespace WeatherApi.Controllers
