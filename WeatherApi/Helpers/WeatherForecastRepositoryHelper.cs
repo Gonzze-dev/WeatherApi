@@ -30,10 +30,10 @@ namespace WeatherApi.Helpers
         public async Task<object> ResponseHelper(HttpResponseMessage? req) //ApiResponse
         {
             if (req == null)
-                throw new BadHttpRequestException("Error, to try get data of weather forecast api");
+                throw new BadHttpRequestException("Error, request is null");
 
             if (!req.IsSuccessStatusCode)
-                throw new BadHttpRequestException("Error al intentar obtener los datos");
+                throw new BadHttpRequestException("Error to try get data of weather forecast api");
 
             var content = await req.Content.ReadAsStringAsync();
 
