@@ -2,7 +2,6 @@
 using RedisDB;
 using StackExchange.Redis;
 using WeatherApi.Interfaces;
-using WeatherApi.Repository.utils;
 
 namespace WeatherApi.Repository
 {
