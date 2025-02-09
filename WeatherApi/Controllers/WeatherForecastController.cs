@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using WeatherApi.Service;
+using WeatherApi.Filters;
+using WeatherApi.Services;
 
 namespace WeatherApi.Controllers
 {
 
+    [WeatherForecastExceptionFilter]
     [ApiController]
     [Route("api/[controller]")]
     public class WeatherForecastController(
@@ -15,21 +17,9 @@ namespace WeatherApi.Controllers
         [HttpGet("GetWeatherForecast")]
         public async Task<IActionResult> GetWeatherForecastData()
         {
-            try
-            {
-                var result = await _weatherForecastService.GetWeatherForecastData();
+            var result = await _weatherForecastService.GetWeatherForecastData();
 
-                if (_weatherForecastService.Validate())
-                    BadRequest(_weatherForecastService.Errors);
-
-                return Ok(result);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
-
-           
+            return Ok(result);
         }
     }
 }

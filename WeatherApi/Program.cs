@@ -1,15 +1,20 @@
 using RedisDB;
 using StackExchange.Redis;
+using WeatherApi.Filters;
 using WeatherApi.Helpers;
 using WeatherApi.Interfaces;
 using WeatherApi.Repository;
-using WeatherApi.Service;
+using WeatherApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllers();
+
+//Filters
+builder.Services.AddControllers((option) =>
+    option.Filters.Add<WeatherForecastExceptionFilter>()
+);
 
 //HTTP
 builder.Services.AddSingleton<HttpClient>();
